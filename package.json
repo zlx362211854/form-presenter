@@ -1,11 +1,12 @@
 {
   "name": "form-presenter",
-  "version": "1.0.9",
+  "version": "1.0.13",
   "description": "FormPresenter",
   "main": "lib/index.js",
+  "types": "src/FormPresenter.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel --extensions '.ts,.js,.tsx'  src --out-dir lib --ignore \"node_modules\""
+    "build": "babel --extensions '.ts,.js,.tsx'  src --out-dir lib --ignore \"node_modules\",\"src/FormPresenter.d.ts\""
   },
   "dependencies": {
     "axios": "^0.20.0",
