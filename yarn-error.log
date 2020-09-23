@@ -1,0 +1,66 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn add webpack-dev-server
+
+PATH: 
+  /usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/mysql/bin:/usr/local/bin:usr/bin:/Applications/apache-jmeter-5.3/bin:/workspace/global_go_path/bin
+
+Yarn version: 
+  1.10.1
+
+Node version: 
+  10.0.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: read ECONNRESET
+      at TLSWrap.onread (net.js:659:25)
+
+npm manifest: 
+  {
+    "name": "form-presenter",
+    "version": "1.0.13",
+    "description": "FormPresenter",
+    "main": "lib/index.js",
+    "types": "src/FormPresenter.d.ts",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "dev": "webpack-dev-server --hot --host localhost --port 8000  --config ./webpack/dev.config.js",
+      "build": "babel --extensions '.ts,.js,.tsx'  src --out-dir lib --ignore \"node_modules\",\"src/FormPresenter.d.ts\""
+    },
+    "dependencies": {
+      "axios": "^0.20.0",
+      "core-js": "^2.6.11",
+      "react": "^16.4.0",
+      "react-dom": "^16.4.0"
+    },
+    "devDependencies": {
+      "@babel/cli": "^7.11.6",
+      "@babel/core": "^7.11.6",
+      "@babel/node": "^7.10.5",
+      "@babel/plugin-syntax-dynamic-import": "7.0.0",
+      "@babel/plugin-transform-named-capturing-groups-regex": "~7.7.4",
+      "@babel/preset-env": "^7.11.5",
+      "@babel/preset-react": "^7.10.4",
+      "@babel/preset-stage-0": "^7.8.3",
+      "@babel/preset-typescript": "^7.3.3",
+      "antd": "^4.6.5",
+      "babel-loader": "^8.0.0-beta.0",
+      "babel-plugin-transform-class-properties": "^6.24.1",
+      "react-hot-loader": "^4.12.21",
+      "webpack": "^3.12.0"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git@gitee.com:zhaolinxiao/formPresenter.git"
+    },
+    "author": "zlx",
+    "license": "ISC"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
