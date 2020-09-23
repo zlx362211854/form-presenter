@@ -1,0 +1,35 @@
+{
+  "name": "form-presenter",
+  "version": "1.0.9",
+  "description": "FormPresenter",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel --extensions '.ts,.js,.tsx'  src --out-dir lib --ignore \"node_modules\""
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "core-js": "^2.6.11",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/plugin-syntax-dynamic-import": "7.0.0",
+    "@babel/plugin-transform-named-capturing-groups-regex": "~7.7.4",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-stage-0": "^7.8.3",
+    "@babel/preset-typescript": "^7.3.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "react-hot-loader": "^4.12.21"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitee.com:zhaolinxiao/formPresenter.git"
+  },
+  "author": "zlx",
+  "license": "ISC"
+}
