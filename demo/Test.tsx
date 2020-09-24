@@ -29,7 +29,7 @@ export const info: IFormItem[] = [
     label: '金额',
     key: 'money',
     uiType: 'currencyInput',
-    suffix: '¥',
+    prefix: '¥',
   },
 
   {

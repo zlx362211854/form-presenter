@@ -1,4 +1,8 @@
-export function formatMoney(value, params) {
+export interface IParams {
+  digit?: number
+  prefix?: string
+}
+export function formatMoney(value, params?: IParams) {
   let {digit, prefix = ''} = params || {}
   if (value === null) return ''
   if (typeof value === 'undefined') return ''

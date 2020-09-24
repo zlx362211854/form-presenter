@@ -95,9 +95,8 @@ export const UIFunctionMap = new Map([
           formatter={(value: number): string => {
             if (!isNumber(value.toString())) return ''
             if (value) {
-              return `${typeof formItem.prefix === 'undefined' ? '' : formItem.prefix}${value}${
-                typeof formItem.suffix === 'undefined' ? '' : formItem.suffix
-              }`
+              return `${typeof formItem.prefix === 'undefined' ? '' : formItem.prefix}${value}${typeof formItem.suffix === 'undefined' ? '' : formItem.suffix
+                }`
             }
           }}
           parser={(value: string): string => {
@@ -115,28 +114,21 @@ export const UIFunctionMap = new Map([
   [
     UIKeyMap.currencyInput,
     (form, formItem, fieldInitValue, formLayout) => {
+      const defaultRule = [
+        {
+          pattern: /(^[1-9][0-9]*(\.[0-9]{1,2})?$|^0*(\.[0-9]{1,2})?$)/,
+          message: '请输入数字(小数点后最多两位)',
+        }
+      ]
       return form.getFieldDecorator(formItem.key, {
-        rules: formItem.rules,
+        rules: formItem.rules ? formItem.rules.concat(defaultRule) : defaultRule,
         initialValue: fieldInitValue,
       })(
-        <InputNumber
+        <Input
           style={{width: formLayout.type === formLayoutEnums.GRID ? '100%' : 'auto'}}
           disabled={formItem.disabled}
-          formatter={(value: number): string => {
-            if (value) {
-              return `${typeof formItem.prefix === 'undefined' ? '' : formItem.prefix}${formatMoney(
-                value,
-              )}${typeof formItem.suffix === 'undefined' ? '' : formItem.suffix}`
-            }
-          }}
-          parser={(value: string) => {
-            if (value) {
-              return value
-                .replace(formItem.prefix, '')
-                .replace(formItem.suffix, '')
-                .replace(/,/g, '')
-            }
-          }}
+          prefix={formItem.prefix}
+          suffix={formItem.suffix}
         />,
       )
     },
