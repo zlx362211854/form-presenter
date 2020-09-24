@@ -1,16 +1,16 @@
-var path = require("path");
+var path=require("path");
 module.exports={
   mode: 'development',
   entry: ['babel-polyfill', './demo/main.js'],
   output: {
-    path: "/build", // 配置打包输出目录
-    filename: "jsBundle.js", // 配置打包后的JS文件名
-    chunkFilename: "[name].[hash:8].js", //动态import文件名
+    path: "/build",
+    filename: "jsBundle.js",
+    chunkFilename: "[name].[hash:8].js",
     publicPath: "/build/"
   },
   devServer: {
     host: 'localhost',
-    port: 9009,
+    port: 3001,
     contentBase: './demo',
     open: true,
     hot: true,
@@ -45,18 +45,32 @@ module.exports={
               ],
               "@babel/typescript"
             ],
+
           }
-        }
+        },
       },
       {
         test: /\.less$/,
-        use: [{
-          loader: "less-loader" // compiles Less to CSS
-        }]
+        use: [
+          {
+            loader: 'style-loader' // creates style nodes from JS strings
+          },
+          {
+            loader: 'css-loader' // translates CSS into CommonJ
+          },
+          {
+            loader: "less-loader", // compiles Less to CSS
+            options: {
+              lessOptions: {
+                javascriptEnabled: true
+              }
+            }
+          }]
+      },
+      {
+        test: /\.css$/i,
+        use: ['css-loader'],
       }
     ],
-  },
-  plugins: [
-		
-	]
+  }
 };

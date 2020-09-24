@@ -1,4 +1,23 @@
 import {uiTypeEnums} from './enums'
+export type uiType = 
+  | 'text'
+  | 'info'
+  | 'title'
+  | 'input'
+  | 'textArea'
+  | 'numberInput'
+  | 'currencyInput'
+  | 'switch'
+  | 'select'
+  | 'radio'
+  | 'datePicker'
+  | 'dateRangePicker'
+  | 'monthPicker'
+  | 'timePicker'
+  | 'upload'
+  | 'avatar'
+  | 'picturesWall'
+  | 'custom'
 
 export type RuleType =
   | 'string'
@@ -118,7 +137,7 @@ export interface IuploadProps {
 export interface IFormItem {
   label?: string // 字段的label
   key?: string // 字段在form中的key
-  uiType?: uiTypeEnums // 字段对应的ui类型
+  uiType?: uiType // 字段对应的ui类型
   rules?: ValidationRule[] // 字段的校验规则
   selectOptions?: IOptions // select类型的option
   radioOptions?: IOptions // radio类型的option

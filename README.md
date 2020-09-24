@@ -8,6 +8,16 @@ FormPresenter是一个根据数据模型生成表单的对象实例和组件实�
 
 基础表单场景和弹窗中的临时交互表单
 
+### run demo
+```shell
+git clone https://github.com/zlx362211854/form-presenter.git
+
+cd form-presenter
+
+npm i
+
+npm run dev
+```
 ### 安装
 
 ```shell
@@ -31,7 +41,7 @@ npm i form-presenter
        {
        label: '姓名',
        key: 'name',
-       uiType: uiTypeEnums.INPUT,
+       uiType: 'input',
        rules: [
          {
            required: true,
@@ -52,7 +62,7 @@ npm i form-presenter
        {
        label: '姓名',
        key: 'name',
-       uiType: uiTypeEnums.INPUT,
+       uiType: 'input',
        rules: [
          {
            required: true,
@@ -71,7 +81,7 @@ npm i form-presenter
        {
        label: '姓名',
        key: 'name',
-       uiType: uiTypeEnums.INPUT, // 设置字段的ui组件为input
+       uiType: 'input', // 设置字段的ui组件为input
        rules: [
          {
            required: true,
@@ -104,14 +114,13 @@ npm i form-presenter
    代码示例
 
    ```tsx
-   import FormPresenter from 'src/businessComponents/EntityForm/FormPresenter'
-   import {IFormItem} from 'src/businessComponents/EntityForm/declare'
-   import {uiTypeEnums} from 'src/businessComponents/EntityForm/enums'
+   import FormPresenter from './FormPresenter'
+   import {IFormItem} from './declare'
    const info: IFormItem[] = [
      {
        label: '姓名',
        key: 'name',
-       uiType: uiTypeEnums.INPUT, // 设置字段的ui组件为input
+       uiType: 'input', // 设置字段的ui组件为input
        rules: [
          {
            required: true,
@@ -158,7 +167,7 @@ npm i form-presenter
      {
        label: '姓名',
        key: 'name',
-       uiType: uiTypeEnums.INPUT, // 设置字段的ui组件为input
+       uiType: 'input', // 设置字段的ui组件为input
        rules: [
          {
            required: true,
@@ -169,7 +178,7 @@ npm i form-presenter
      {
        label: '年龄',
        key: 'age',
-       uiType: uiTypeEnums.INPUT, 
+       uiType: 'input', 
        rules: [
          {
            required: true,
@@ -207,7 +216,7 @@ npm i form-presenter
      {
        label: '姓名',
        key: 'name',
-       uiType: uiTypeEnums.INPUT, // 设置字段的ui组件为input
+       uiType: 'input', // 设置字段的ui组件为input
        rules: [
          {
            required: true,
@@ -229,7 +238,7 @@ npm i form-presenter
        this.presenter.addFormItem({
          label: '描述',
          key: 'desc',
-         uiType: uiTypeEnums.CUSTOM, // 添加类型为自定义组件（也可以添加内置组件）
+         uiType: 'custom', // 添加类型为自定义组件（也可以添加内置组件）
          rules: [
            {
              required: false,
@@ -459,7 +468,7 @@ npm i form-presenter
      presenter.addFormItem({
          label: '身高',
          key: 'high',
-         uiType: uiTypeEnums.INPUT, // 添加类型为input
+         uiType: 'input', // 添加类型为input
          rules: [
            {
              required: false,
@@ -471,7 +480,7 @@ npm i form-presenter
      presenter.addFormItem({
          label: '描述',
          key: 'desc',
-         uiType: uiTypeEnums.CUSTOM, // 添加类型为自定义组件
+         uiType: 'custom', // 添加类型为自定义组件
          rules: [
            {
              required: false,

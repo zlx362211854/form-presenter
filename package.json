@@ -30,11 +30,16 @@
     "@babel/preset-typescript": "^7.10.4",
     "antd": "^3.26.18",
     "babel-loader": "^8.0.5",
+    "babel-plugin-import": "^1.13.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
+    "css-loader": "^4.3.0",
     "html-webpack-plugin": "^4.5.0",
+    "less": "^3.12.2",
+    "less-loader": "^7.0.1",
     "react-hot-loader": "^4.12.21",
+    "style-loader": "^1.2.1",
     "webpack": "^4.44.2"
   },
   "repository": {

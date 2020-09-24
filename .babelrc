@@ -14,6 +14,7 @@
 	],
 	"plugins": [
 		"@babel/plugin-syntax-dynamic-import",
-		"transform-class-properties"
+    "transform-class-properties",
+    ["import", { "libraryName": "antd", "libraryDirectory": "lib"}, "ant"]
 	]
 }

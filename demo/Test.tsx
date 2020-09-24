@@ -1,10 +1,10 @@
 import React from 'react'
 import {Button} from 'antd'
 import FormPresenter from '../src/FormPresenter'
-import  {IFormItem} from '../src/declare'
+import {IFormItem, uiType} from '../src/declare'
 export const info: IFormItem[] = [
   {
-    label: '姓名',
+    label: '姓名s',
     key: 'name',
     uiType: 'input',
     rules: [
@@ -101,7 +101,7 @@ export const info: IFormItem[] = [
 ]
 export default class Test extends React.Component {
   private presenter: FormPresenter<any>
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.presenter = new FormPresenter({
       formItems: info,
@@ -118,12 +118,6 @@ export default class Test extends React.Component {
             form.setFieldsValue({
               age: 18,
             })
-            // form.setFields({
-            //   balance: {
-            //     value: 456,
-            //     errors: [new Error('金额不能大于余额')],
-            //   },
-            // })
           }
         }
       },
@@ -144,7 +138,7 @@ export default class Test extends React.Component {
     this.presenter.addFormItem({
       label: '描述',
       key: 'desc',
-      uiType: uiTypeEnums.CUSTOM, // 添加类型为自定义组件（也可以添加内置组件）
+      uiType: 'custom', // 添加类型为自定义组件（也可以添加内置组件）
       rules: [
         {
           required: false,
@@ -170,14 +164,8 @@ export default class Test extends React.Component {
     const FormComponent = this.presenter.getFormComponent()
     const formComponentProps = {
       initFormValues: {
-        // balance: 12234.888,
-        // poundage: [
-        //   'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        //   'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        // ],
-        // money: 2345.667,
         name: 'zlx',
-      },
+      }
     }
     return (
       <div title={'测试'} style={{width: '80%', margin: 'auto'}}>
