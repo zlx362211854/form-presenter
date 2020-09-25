@@ -43,8 +43,8 @@ export interface IformLayout extends IFormItemLayout {
   type: string
   col?: number
 }
-export default class FormPresenter<T> extends FormLifecycle {
-  private HOCFormComponent: React.ComponentClass
+export default class FormPresenter extends FormLifecycle {
+  private HOCFormComponent: any
 
   private form: IFormProps['form']
 
@@ -104,7 +104,7 @@ export default class FormPresenter<T> extends FormLifecycle {
   private initForm = (formItems: IFormItem[], initFormValues: any, rest?: any): void => {
     const {onFieldsChange, onValuesChange} = rest
     let formCreated = false
-    this.HOCFormComponent = Form.create<T & FormComponentProps>({onFieldsChange, onValuesChange})(
+    this.HOCFormComponent = Form.create({onFieldsChange, onValuesChange})(
       ({form, ...props}: any) => {
         this.form = form
         // rewrite validateFields method
@@ -138,7 +138,7 @@ export default class FormPresenter<T> extends FormLifecycle {
    * @return:
    */
 
-  public getFormComponent = (): React.ComponentClass | Function => {
+  public getFormComponent = (): Function => {
     if (this.HOCFormComponent) {
       return this.HOCFormComponent
     }

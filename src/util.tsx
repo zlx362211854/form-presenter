@@ -57,7 +57,7 @@ export const UIFunctionMap = new Map([
       })(
         <span style={formItem.style}>
           {formItem.prefix}
-          {fieldInitValue}
+          {form.getFieldValue(formItem.key) || fieldInitValue}
           {formItem.suffix}
         </span>,
       )

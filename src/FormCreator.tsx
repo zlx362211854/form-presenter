@@ -92,8 +92,8 @@ export default class FormCreator extends React.Component<IFormCreator> {
         if (typeof formItem.extra === 'string') {
           extra = formItem.extra
         } else if (typeof formItem.extra === 'function') {
-          const {initFormValues} = this.props
-          const fieldInitValue = initFormValues[formItem.key]
+          const {initFormValues, form} = this.props
+          const fieldInitValue = initFormValues[formItem.key] || form.getFieldValue(formItem.key)
           extra = formItem.extra(fieldInitValue)
         }
         if (formItem.uiType === uiTypeEnums.TITLE) {
