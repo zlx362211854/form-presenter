@@ -43,7 +43,7 @@ export default class FormPresenter {
   }
 
   private initForm = () => {
-    this.HOCFormComponent = () => {
+    this.HOCFormComponent = (componentProps) => {
       const initFormValues = this.options.initFormValues;
       Object.keys(initFormValues)?.forEach((key) => {
         this.options.formItems.find((i) => i.key === key)[key] = initFormValues[key];
@@ -55,6 +55,7 @@ export default class FormPresenter {
           initFormValues={{
             [FORM_ITEMS]: this.options.formItems || [],
           }}
+          componentProps={componentProps || {}}
           onSubmit={this.options.onSubmit}
           onSubmitFailed={this.options.onSubmitFailed}
           disableSubmitButton={this.options.disableSubmitButton}

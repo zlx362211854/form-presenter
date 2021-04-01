@@ -13,7 +13,9 @@ const defaultFormItemLayout = {
     span: 14,
   },
 };
-interface IProps extends IFormPresenterOptions {}
+interface IProps extends IFormPresenterOptions {
+  componentProps: any // 渲染时来自组件的props
+}
 export const formatValues = (values) => {
   const fields = values[FORM_ITEMS].map(i => i.key)
   const vals = {}
@@ -37,6 +39,10 @@ const FormCreator = forwardRef((props: IProps, ref) => {
 
   useEffect(() => {
     props?.onFormCreated?.(overwritedForm);
+    // 设置表单初始化值
+    if (Object.keys(props.componentProps?.initFormValues).length !== 0) {
+      overwritedForm.setFieldsValue(props.componentProps.initFormValues)
+    }
   }, [overwritedForm]);
 
   const onFinish = (values) => {
