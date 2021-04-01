@@ -20,8 +20,9 @@ export const formatValues = (values) => {
   const fields = values[FORM_ITEMS].map(i => i.key)
   const vals = {}
   fields.forEach(i => {
-    if (vals[i]) {
-      vals[i] = values[FORM_ITEMS].find(l => l.key === i)[i]
+    const v = values[FORM_ITEMS].find(l => l.key === i)[i]
+    if (v) {
+      vals[i] = v
     }
   })
   return vals
@@ -40,9 +41,9 @@ const FormCreator = forwardRef((props: IProps, ref) => {
   useEffect(() => {
     props?.onFormCreated?.(overwritedForm);
     // 设置表单初始化值
-    if (Object.keys(props.componentProps?.initFormValues).length !== 0) {
-      overwritedForm.setFieldsValue(props.componentProps.initFormValues)
-    }
+    // if (props.componentProps.initFormValues && Object.keys(props.componentProps.initFormValues).length !== 0) {
+    //   overwritedForm.setFieldsValue(props.componentProps.initFormValues)
+    // }
   }, [overwritedForm]);
 
   const onFinish = (values) => {

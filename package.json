@@ -1,9 +1,9 @@
 {
   "name": "form-presenter",
-  "version": "1.0.13",
+  "version": "2.0.4",
   "description": "FormPresenter",
   "main": "lib/index.js",
-  "types": "src/FormPresenter.d.ts",
+  "types": "lib/FormPresenter.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "./node_modules/.bin/webpack-dev-server --mode development --config webpack.config.js",
