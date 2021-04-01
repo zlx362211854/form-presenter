@@ -1,16 +1,8 @@
 import React from 'react'
-import { CameraOutlined } from '@ant-design/icons';
-import { Upload, Modal, message } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { Upload, message, Button } from 'antd';
 import ImageService from './imageService'
 
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = (error) => reject(error)
-  })
-}
 
 export interface IFileProp {
   uid: string
@@ -18,7 +10,7 @@ export interface IFileProp {
   status?: string
   url: string
 }
-export interface IPicturesWall {
+export interface IUploadProps {
   onChange: (value: any) => void
   action: string
   initImageUrls?: IFileProp[] | string[]
@@ -26,18 +18,17 @@ export interface IPicturesWall {
   fileTypes?: string[]
   fileSize?: number,
   origin?: boolean
-  disabled?: boolean
+  form?: any
 }
-export default class PicturesWall extends React.Component<IPicturesWall> {
+export default class Uploader extends React.Component<IUploadProps> {
   private defaultFileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
   private defaultFileSize = 2
+  private defaultMaxFileLength = 4
   state = {
-    previewVisible: false,
-    previewImage: '',
     fileList: [],
     fileTypes: this.props.fileTypes || this.defaultFileTypes,
     fileSize: this.props.fileSize || this.defaultFileSize,
-    maxFileLength: 1,
+    maxFileLength: this.props.maxFileLength || this.defaultMaxFileLength,
   }
   componentDidMount() {
     const {initImageUrls = [], origin} = this.props
@@ -68,6 +59,9 @@ export default class PicturesWall extends React.Component<IPicturesWall> {
           this.setState({fileList})
         })
       } else {
+        if(typeof initImageUrls === 'string'){
+          initImageUrls = [initImageUrls]
+        }
         const fileList = initImageUrls.map((i, index) => ({
           uid: index,
           status: 'done',
@@ -78,66 +72,55 @@ export default class PicturesWall extends React.Component<IPicturesWall> {
       }
     }
   }
-  handleCancel = () => this.setState({previewVisible: false})
 
-  handlePreview = async (file) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj)
-    }
-
-    this.setState({
-      previewImage: file.url || file.preview,
-      previewVisible: true,
-    })
-
-  }
 
   handleChange = (info) => {
-
     const {fileList} = info
     if (info.file.status === 'done' || info.file.status === 'removed') {
-      const donefileList = fileList.filter((i) => i.status === 'done').map((i) => i.response?.result ? i.response.result : i.response?.url)
-      this.props.onChange(donefileList[0])
+      const donefileList = fileList.filter((i) => i.status === 'done').map((i) => ({url: i.response.result, name: i.name}))
+      this.props.onChange(donefileList)
     }
-    this.setState({fileList})
+    if (this.isRightType(info.file)) {
+      this.setState({fileList})
+    }
   }
-  beforeUpload = (file) => {
-    const {fileTypes, fileSize} = this.state
-    const isRightFileType = fileTypes.indexOf(file.type) !== -1
+  isRightType = (file) => {
+    const {fileTypes} = this.state
+    const isRightFileType = fileTypes.find(t => file.type.indexOf(t) !== -1)
+    return !!isRightFileType
+  }
+  beforeUpload = (file): boolean => {
+    const {fileSize} = this.state
+    const isRightFileType = this.isRightType(file)
     if (!isRightFileType) {
+      this.props.form.setFields({
+        files: {
+          errors: [new Error('不能上传该类型文件')],
+        },
+      })
       message.error('不能上传该类型文件')
     }
     const isLessthan = file.size / 1024 / 1024 < fileSize
     if (!isLessthan) {
       message.error(`图片大小不能超过${fileSize}MB!`)
     }
-    return isRightFileType && isLessthan
+    return !!isRightFileType && !!isLessthan
   }
   render() {
-    const {previewVisible, previewImage, fileList, maxFileLength} = this.state
-    const uploadButton = (
-      <div>
-        <CameraOutlined style={{fontSize: '38px', marginBottom: '10px'}} />
-        <div className="ant-upload-text">上传</div>
-      </div>
-    )
+    const {fileList, maxFileLength} = this.state
     return (
       <div className="clearfix">
         <Upload
           action={this.props.action}
-          listType="picture-card"
           fileList={fileList}
-          onPreview={this.handlePreview}
           beforeUpload={this.beforeUpload}
           onChange={this.handleChange}
-          showUploadList={{showPreviewIcon: true, showRemoveIcon: this.props.disabled !== true, showDownloadIcon: false}}
+          showUploadList={{showPreviewIcon: true, showRemoveIcon: true, showDownloadIcon: false}}
         >
-          {fileList.length >= maxFileLength ? null : uploadButton}
+          {fileList.length >= maxFileLength ? null :  <Button type={'primary'}><UploadOutlined /></Button>}
         </Upload>
-        <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-          <img alt="example" style={{width: '100%'}} src={previewImage} />
-        </Modal>
+
       </div>
-    )
+    );
   }
 }

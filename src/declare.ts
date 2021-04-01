@@ -1,9 +1,10 @@
-import {uiTypeEnums} from './enums'
-export type uiType = 
+import { FormProps, Rule } from 'antd/es/form';
+export type uiType =
   | 'text'
   | 'info'
   | 'title'
   | 'input'
+  | 'color'
   | 'textArea'
   | 'numberInput'
   | 'currencyInput'
@@ -17,7 +18,20 @@ export type uiType =
   | 'upload'
   | 'avatar'
   | 'picturesWall'
+  | 'button'
+  | 'treeSelect'
   | 'custom'
+  | 'checkbox'
+  | 'pageSelect'
+  | 'checkboxTab'
+  | 'ueditor'
+  | 'goods_list'
+  | 'goods_single'
+  | 'attachment'
+  | 'model_id'
+  | 'reduce_rule'
+  | 'map_lon_lat'
+
 
 export type RuleType =
   | 'string'
@@ -47,7 +61,7 @@ export interface RuleItem {
   whitespace?: boolean
   fields?: Rules // ignore when without required
   options?: ValidateOption
-  defaultField?: {type: RuleType} // 'object' or 'array' containing validation rules
+  defaultField?: { type: RuleType } // 'object' or 'array' containing validation rules
   transform?: (value: any) => any
   message?: string
   asyncValidator?: (
@@ -122,23 +136,32 @@ export declare type ValidationRule = {
   transform?: (value: any) => any
   /** custom validate function (Note: callback must be called) */
   validator?: (rule: any, value: any, callback: any, source?: any, options?: any) => any
+  asyncValidator?: (...args: any[]) => any;
 }
 export interface IOptions {
   title: string
   key: string
 }
 export interface IuploadProps {
+  name?: string
   action?: string // 上传文件的地址
   maxFileLength?: number // 上传的最大文件数量
   fileTypes?: string[] // 上传文件的类型
   fileSize?: number // 单个文件的大小 单位：MB
   origin?: boolean // 是否根据图片部分路径远程获取全路径
 }
+export interface IRenderProps {
+  form: FormProps['form']
+}
 export interface IFormItem {
   label?: string // 字段的label
   key?: string // 字段在form中的key
   uiType?: uiType // 字段对应的ui类型
-  rules?: ValidationRule[] // 字段的校验规则
+  rules?: Rule[] // 字段的校验规则
+  options?: any[] //
+  renderByTreeData?: boolean // treeSelect 组件是否根据treeData渲染
+  multiple?: boolean // select 是否可多选
+  filterKey?: 'children' | 'value' // 当多选的时候，根据什么来筛选，childern表示根据展示的label， value表示根据值
   selectOptions?: IOptions // select类型的option
   radioOptions?: IOptions // radio类型的option
   min?: number // input number类型的最小值
@@ -150,11 +173,17 @@ export interface IFormItem {
   disabled?: boolean // 是否禁用
   showTime?: boolean // datePicker & dateRangePicker 是否可选择时间
   format?: string // datePicker & dateRangePicker & timePicker 时间展示格式
+  disabledDate?: (current) => boolean
   uploadProps?: IuploadProps
   extra?: string | Function
   divider?: boolean
   style?: any
-  render?: any
+  render?: (props: IRenderProps) => any // 自定义渲染时返回form对象供使用
+  itemAtion?: (current) => any
+  hideItem?: boolean
+  addtionSelet?: any[]
+  placeholder?: string
+  precision?: any
 }
 export interface IFormItemLayout {
   labelCol?: ICol
@@ -168,4 +197,8 @@ export interface IFormPresenter {
   initFormValues?: any
   onFieldsChange?: Function
   onValuesChange?: Function
+}
+export interface IformLayout extends IFormItemLayout {
+  type: string
+  col?: number
 }

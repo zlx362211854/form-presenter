@@ -1,5 +1,6 @@
 import React from 'react'
-import {Upload, Icon, Modal, message} from 'antd'
+import { CameraOutlined } from '@ant-design/icons';
+import { Upload, Modal, message } from 'antd';
 import ImageService from './imageService'
 
 function getBase64(file) {
@@ -25,6 +26,7 @@ export interface IPicturesWall {
   fileTypes?: string[]
   fileSize?: number,
   origin?: boolean
+  stringValue?: boolean
 }
 export default class PicturesWall extends React.Component<IPicturesWall> {
   private defaultFileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
@@ -39,7 +41,7 @@ export default class PicturesWall extends React.Component<IPicturesWall> {
     maxFileLength: this.props.maxFileLength || this.defaultMaxFileLength,
   }
   componentDidMount() {
-    const {initImageUrls = [], origin} = this.props
+    const { initImageUrls = [], origin } = this.props
     this.init(initImageUrls, origin)
   }
   componentWillReceiveProps(newProps) {
@@ -49,7 +51,6 @@ export default class PicturesWall extends React.Component<IPicturesWall> {
   }
 
   init = (initImageUrls, origin) => {
-    console.log(initImageUrls, 'initImages3')
     if (initImageUrls) {
       // 获取全路径
       if (origin) {
@@ -63,22 +64,25 @@ export default class PicturesWall extends React.Component<IPicturesWall> {
             uid: index,
             status: 'done',
             url: i.data,
-            response: {url: i.data},
+            response: { url: i.data },
           }))
-          this.setState({fileList})
+          this.setState({ fileList })
         })
       } else {
+        if (typeof initImageUrls === 'string') {
+          initImageUrls = [initImageUrls]
+        }
         const fileList = initImageUrls.map((i, index) => ({
           uid: index,
           status: 'done',
           url: i,
-          response: {url: i},
+          response: { url: i },
         }))
-        this.setState({fileList})
+        this.setState({ fileList })
       }
     }
   }
-  handleCancel = () => this.setState({previewVisible: false})
+  handleCancel = () => this.setState({ previewVisible: false })
 
   handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -92,30 +96,31 @@ export default class PicturesWall extends React.Component<IPicturesWall> {
   }
 
   handleChange = (info) => {
-    const {fileList} = info
+    const { fileList } = info
     if (info.file.status === 'done' || info.file.status === 'removed') {
-      const donefileList = fileList.filter((i) => i.status === 'done').map((i) => i.response.result)
-      this.props.onChange(donefileList)
+      console.log(info, 'info')
+      const donefileList = fileList.filter((i) => i.status === 'done').map((i) => i.response?.result ? i.response.result : i.response?.url)
+      this.props.onChange(this.props?.stringValue ? donefileList[0] : donefileList)
     }
-    this.setState({fileList})
+    this.setState({ fileList })
   }
   beforeUpload = (file) => {
-    const {fileTypes, fileSize} = this.state
+    const { fileTypes, fileSize } = this.state
     const isRightFileType = fileTypes.indexOf(file.type) !== -1
     if (!isRightFileType) {
       message.error('不能上传该类型文件')
     }
-    const isLt2M = file.size / 1024 / 1024 < fileSize
-    if (!isLt2M) {
-      message.error('Image must smaller than 2MB!')
+    const isLessthan = file.size / 1024 / 1024 < fileSize
+    if (!isLessthan) {
+      message.error(`图片大小不能超过${fileSize}MB!`)
     }
-    return isRightFileType && isLt2M
+    return isRightFileType && isLessthan
   }
   render() {
-    const {previewVisible, previewImage, fileList, maxFileLength} = this.state
+    const { previewVisible, previewImage, fileList, maxFileLength } = this.state
     const uploadButton = (
       <div>
-        <Icon type="camera" style={{fontSize: '38px', marginBottom: '10px'}} />
+        <CameraOutlined style={{ fontSize: '38px', marginBottom: '10px' }} />
         <div className="ant-upload-text">上传</div>
       </div>
     )
@@ -128,12 +133,12 @@ export default class PicturesWall extends React.Component<IPicturesWall> {
           onPreview={this.handlePreview}
           beforeUpload={this.beforeUpload}
           onChange={this.handleChange}
-          showUploadList={{showPreviewIcon: true, showRemoveIcon: true, showDownloadIcon: false}}
+          showUploadList={{ showPreviewIcon: true, showRemoveIcon: true, showDownloadIcon: false }}
         >
           {fileList.length >= maxFileLength ? null : uploadButton}
         </Upload>
         <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-          <img alt="example" style={{width: '100%'}} src={previewImage} />
+          <img alt="example" style={{ width: '100%' }} src={previewImage} />
         </Modal>
       </div>
     )

@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.20.0",
     "core-js": "^2.6.11",
+    "lodash": "^4.17.21",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "webpack-cli": "^3.3.12",
@@ -28,7 +29,7 @@
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-stage-0": "^7.8.3",
     "@babel/preset-typescript": "^7.10.4",
-    "antd": "^3.26.18",
+    "antd": "^4",
     "babel-loader": "^8.0.5",
     "babel-plugin-import": "^1.13.0",
     "babel-plugin-transform-class-properties": "^6.24.1",

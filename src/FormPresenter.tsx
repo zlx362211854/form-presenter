@@ -1,137 +1,75 @@
-/**
- * @description: 公共EntityForm组件生成器
- * @param {type}
- * @return:
- */
-import React from 'react'
-import {Form} from 'antd'
-import {FormProps} from 'antd/es/form';
-import FromCreator, {IFormCreator} from './FormCreator'
-import {IFormItem, IFormItemLayout} from './declare'
-import {formLayoutEnums, FORM_TITEMS} from './enums'
-import {FormLifecycle} from './FormLifecycle'
-import {FormComponentProps} from 'antd/lib/form/Form'
+import { FormProps } from 'antd';
+import React from 'react';
+import { IFormItem, IformLayout } from './declare';
+import { formLayoutEnums, FORM_ITEMS } from './enums';
+import FormCreator from './FormCreator';
+import _ from 'lodash';
+export interface IFormPresenterOptions {
+  formItems: IFormItem[];
+  initFormValues?: any;
+  formLayout?: IformLayout;
+  onFieldsChange?: (props: FormProps, fields: any, allFields: any) => void; // 表单字段改变
+  onValuesChange?: (props: FormProps, changedValues: any, allValues: any) => void; // 表单字段值改变
+  disableSubmitButton?: boolean; // 不展示默认提交按钮
+  onSubmit?: (values: any) => void; // 默认提交按钮 校验成功回调
+  onSubmitFailed?: (onSubmitFailed: any[], form: IRewriteForm) => void; // 默认提交按钮 校验失败成功回调
 
-export interface IFormProps extends FormProps {
-  // self props
-}
-
-export interface EntityFormLifecycle {
+  /* life cycle */
   /** 表单被创建 */
-  onFormCreated?: (form: IFormProps['form']) => void
+  onFormCreated?: (form: IRewriteForm) => void;
   /** 表单组件被加载 */
-  onFormMount?: () => void
+  onFormMount?: () => void;
   /** 表单组件被销毁 */
-  onFormDestroy?: () => void
+  onFormDestroy?: () => void;
 }
 
-declare type FormCreateOptionMessagesCallback = (...args: any[]) => string
+export type IRewriteForm = {
+  validateFields: (any) => void;
+  validateFieldsAndScroll: (any) => void;
+} & FormProps['form'];
 
-interface FormCreateOptionMessages {
-  [messageId: string]: string | FormCreateOptionMessagesCallback | FormCreateOptionMessages
-}
-
-export interface IFormPresenterProps extends EntityFormLifecycle, IFormCreator {
-  onFieldsChange?: (props: FormProps, fields: any, allFields: any) => void
-  onValuesChange?: (props: FormProps, changedValues: any, allValues: any) => void
-  mapPropsToFields?: (props: FormProps) => void
-  validateMessages?: FormCreateOptionMessages
-  withRef?: boolean
-  name?: string
-}
-export interface IformLayout extends IFormItemLayout {
-  type: string
-  col?: number
-}
-export default class FormPresenter extends FormLifecycle {
-  private HOCFormComponent: any
-
-  private form: IFormProps['form']
-
-  private formItems: IFormItem[]
-
-  private initFormValues: any
-
-  private rest
-
-  private formLayout: IformLayout = {
+export default class FormPresenter {
+  private options: IFormPresenterOptions;
+  private formCompRef: any = React.createRef();
+  private HOCFormComponent: any;
+  private defaultFormLayout: IFormPresenterOptions['formLayout'] = {
     type: formLayoutEnums.FLOW, // 默认流式布局
+  };
+
+  constructor(options: IFormPresenterOptions) {
+    if (!options.initFormValues) options.initFormValues = {};
+    this.options = options;
+    this.initForm();
   }
 
-  constructor (options: IFormPresenterProps) {
-    super()
-    const {
-      formItems,
-      initFormValues,
-      onFormCreated,
-      onFormDestroy,
-      onFormMount,
-      formLayout,
-      ...rest
-    } = options
+  private initForm = () => {
+    this.HOCFormComponent = () => {
+      const initFormValues = this.options.initFormValues;
+      Object.keys(initFormValues)?.forEach((key) => {
+        this.options.formItems.find((i) => i.key === key)[key] = initFormValues[key];
+      });
+      return (
+        <FormCreator
+          ref={this.formCompRef}
+          formItems={this.options.formItems}
+          initFormValues={{
+            [FORM_ITEMS]: this.options.formItems || [],
+          }}
+          onSubmit={this.options.onSubmit}
+          onSubmitFailed={this.options.onSubmitFailed}
+          disableSubmitButton={this.options.disableSubmitButton}
+          formLayout={this.options.formLayout || this.defaultFormLayout}
+          onFieldsChange={this.options.onFieldsChange}
+          onValuesChange={this.options.onValuesChange}
+          // life cycle
+          onFormCreated={this.options.onFormCreated}
+          onFormMount={this.options.onFormMount}
+          onFormDestroy={this.options.onFormDestroy}
+        />
+      );
+    };
+  };
 
-    this.formItems = formItems
-
-    this.initFormValues = initFormValues
-
-    this.rest = rest
-
-    if (formLayout) {
-      this.formLayout = formLayout
-    }
-    /* onFormCreated */
-    if (onFormCreated) {
-      this.listener.formCreatedListener.push(onFormCreated)
-    }
-    /* onFormMount */
-    if (onFormMount) {
-      this.listener.formMountListener.push(onFormMount)
-    }
-    /* onFormDestroy */
-    if (onFormDestroy) {
-      this.listener.formDestroyListener.push(onFormDestroy)
-    }
-    if (initFormValues) {
-      this.initForm(formItems, initFormValues, rest)
-    }
-  }
-
-  public setInitformValues = (initFormValues: any) => {
-    this.initFormValues = initFormValues
-    this.initForm(this.formItems, initFormValues, this.rest)
-  }
-
-  private initForm = (formItems: IFormItem[], initFormValues: any, rest?: any): void => {
-    const {onFieldsChange, onValuesChange} = rest
-    let formCreated = false
-    this.HOCFormComponent = Form.create({onFieldsChange, onValuesChange})(
-      ({form, ...props}: any) => {
-        this.form = form
-        // rewrite validateFields method
-        this.__validateFieldsAndScroll(form)
-        this.__validateFields(form)
-        form.getFieldDecorator(FORM_TITEMS, {
-          initialValue: formItems,
-          getValueFromEvent: () => undefined,
-        })
-        if (!formCreated) {
-          formCreated = true
-          // trigger lifeCycle listener
-          this.triggerListener('formCreatedListener', form)
-        }
-        return (
-          <FromCreator
-            triggerListener={this.triggerListener}
-            form={form}
-            formLayout={this.formLayout}
-            initFormValues={initFormValues}
-            {...rest}
-            {...props}
-          />
-        )
-      },
-    )
-  }
   /**
    * @description: 返回FormComponent组件
    * @param {type}
@@ -140,46 +78,74 @@ export default class FormPresenter extends FormLifecycle {
 
   public getFormComponent = (): Function => {
     if (this.HOCFormComponent) {
-      return this.HOCFormComponent
+      return this.HOCFormComponent;
     }
-    return () => <div />
-  }
+    return () => <div />;
+  };
+  /**
+   * @description: 返回formItems
+   * @param {type}
+   * @return:
+   */
+
+  public getFormItems = (): IFormItem[] => {
+    return this.options.formItems;
+  };
   /**
    * @description: 返回form实例
    * @param {type}
    * @return:
    */
 
-  public getForm = (): IFormProps['form'] => {
-    return this.form
-  }
-
+  public getForm = (): IRewriteForm => {
+    return this.formCompRef?.current.getForm();
+  };
   /**
    * @description: 增加form item
    * @param {type}
    * @return:
    */
   public addFormItem = (formItem: IFormItem, index?: number) => {
-    if (this.form) {
-      if (!formItem) return
-      const {key} = formItem
-      const formItems = this.form.getFieldValue(FORM_TITEMS)
-      if (!formItems.find(((i: {key: string | number}) => i.key === key))) {
+    const form = this.getForm();
+    if (form) {
+      if (!formItem) return;
+      const { key } = formItem;
+      const formItems = this.options.formItems;
+      if (!formItems.find((i) => i.key === key)) {
         if (typeof index === 'undefined') {
-          formItems.push(formItem)
+          formItems.push(formItem);
         } else {
-          formItems.splice(index, 0, formItem)
+          formItems.splice(index, 0, formItem);
         }
-        this.form.setFieldsValue({
-          [FORM_TITEMS]: formItems,
-        })
+        form.setFieldsValue({
+          ...form.getFieldsValue(),
+        });
       } else {
-        console.warn(`Form field ${key} has already been created!`)
+        console.warn(`Form field ${key} has already been created!`);
       }
     } else {
-      console.warn('Form field cannot be set before the form created!')
+      console.warn('Form field cannot be set before form created!');
     }
-  }
+  };
+
+  /**
+   * @description: 更新form item
+   * @param {type}
+   * @return:
+   */
+  public updateFormItem = (formItem: IFormItem) => {
+    const form = this.getForm();
+    if (form) {
+      const formItems = this.options.formItems;
+      const index = formItems.findIndex((i) => i.key === formItem.key);
+      formItems.splice(index, 1, formItem);
+      form.setFieldsValue({
+        ...form.getFieldsValue(),
+      });
+    } else {
+      console.warn('Form field cannot be set before form created!');
+    }
+  };
   /**
    * @description: 判断form是否已有某字段
    * @param {type}
@@ -187,10 +153,24 @@ export default class FormPresenter extends FormLifecycle {
    */
 
   public hasField = (key: string) => {
-    const formItems = this.form.getFieldValue(FORM_TITEMS)
-    if (!formItems.find((i: {key: string | number}) => i.key === key)) {
-      return false
+    const formItems = this.options.formItems;
+    if (!formItems.find((i) => i.key === key)) {
+      return false;
     }
-    return true
-  }
+    return true;
+  };
+
+  /**
+   * @description: 把form重置回初始值的状态
+   * @param {type}
+   * @return {type}
+   */
+  public resetFields = () => {
+    const form = this.getForm();
+    if (Object.keys(this.options.initFormValues).length === 0) {
+      form.resetFields([FORM_ITEMS]);
+    } else {
+      form?.setFieldsValue(this.options.initFormValues);
+    }
+  };
 }

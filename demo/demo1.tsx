@@ -114,11 +114,11 @@ export default class Demo1 extends React.Component {
       onValuesChange: ({form}, changedvalues, allValues) => {
         // reaction
         if (changedvalues && changedvalues.name) {
-          if (changedvalues.name === '杨超越') {
-            form.setFieldsValue({
-              age: 18,
-            })
-          }
+          // if (changedvalues.name === '杨超越') {
+          //   form.setFieldsValue({
+          //     age: 18,
+          //   })
+          // }
         }
       },
       onFormCreated: () => {

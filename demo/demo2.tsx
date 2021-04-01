@@ -85,7 +85,7 @@ export default class Demo2 extends React.Component {
             refundAmount: changedvalues.amount,
           })
         }
-      },
+      }
     })
     this.state = {}
   }

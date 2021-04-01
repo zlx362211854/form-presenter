@@ -1,5 +1,6 @@
 import React from 'react'
-import {Input, Button, Icon} from 'antd'
+import {Input, Button} from 'antd'
+import {CloseCircleOutlined} from '@ant-design/icons'
 import FormPresenter from '../src/FormPresenter'
 export interface IProps {
   presenter: FormPresenter
@@ -24,20 +25,14 @@ export default class Reason extends React.Component<IProps> {
       refundReason: '',
     })
     this.setState({values})
-    const form = this.props.presenter.getForm()
-    form.setFieldsValue({
-      refundReason: values,
-    })
+
   }
   private deleteValue = (index: number) => () => {
     const values = this.state.values.slice(0)
     values.splice(index, 1)
     this.setState({values})
-    const form = this.props.presenter.getForm()
-    form.setFieldsValue({
-      refundReason: values,
-    })
   }
+  
   render() {
     const {values = []} = this.state
     return (
@@ -47,7 +42,7 @@ export default class Reason extends React.Component<IProps> {
             <Input
               maxLength={20}
               key={index}
-              addonAfter={<Icon type="close-circle" onClick={this.deleteValue(index)} />}
+              addonAfter={<CloseCircleOutlined  onClick={this.deleteValue(index)} />}
             />
           )
         })}
