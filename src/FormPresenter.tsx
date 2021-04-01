@@ -8,6 +8,7 @@ export interface IFormPresenterOptions {
   formItems: IFormItem[];
   initFormValues?: any;
   formLayout?: IformLayout;
+  wrapperClassName?: string;
   onFieldsChange?: (props: FormProps, fields: any, allFields: any) => void; // 表单字段改变
   onValuesChange?: (props: FormProps, changedValues: any, allValues: any) => void; // 表单字段值改变
   disableSubmitButton?: boolean; // 不展示默认提交按钮

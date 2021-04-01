@@ -110,6 +110,7 @@ export default class Demo1 extends React.Component {
         type: 'flow',
         col: 8,
       },
+      wrapperClassName: 'dsdsdsxxxx',
       disableSubmitButton: true,
       onValuesChange: ({form}, changedvalues, allValues) => {
         // reaction
@@ -169,7 +170,7 @@ export default class Demo1 extends React.Component {
     }
     return (
       <div title={'测试'} style={{width: '80%', margin: 'auto'}}>
-        <FormComponent {...formComponentProps} />
+        <FormComponent {...formComponentProps}/>
         <Button onClick={() => this.add()}>添加</Button>
         <Button onClick={() => this.submit()}>提交</Button>
       </div>
