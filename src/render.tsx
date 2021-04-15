@@ -84,7 +84,7 @@ export const UIFunctionMap = new Map([
   [
     UIKeyMap.textArea,
     (form, formItem, fieldInitValue, formLayout) => {
-      return <Input.TextArea rows={formItem.rows} placeholder={formItem.placeholder} />;
+      return <Input.TextArea rows={formItem.rows} placeholder={formItem.placeholder} style={formItem.fontSize ? {fontSize: formItem.fontSize} : {}}/>;
     },
   ],
   [

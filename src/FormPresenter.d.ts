@@ -178,6 +178,7 @@ export interface IFormItem {
   divider?: boolean
   style?: any
   render?: any
+  fontSize?: number | string // textArea 的字体大小
 }
 export interface IFormItemLayout {
   labelCol?: ICol
@@ -246,7 +247,7 @@ export interface IFormPresenterOptions {
   /** 表单组件被销毁 */
   onFormDestroy?: () => void;
 }
-export default class FormPresenter<IFormPresenterOptions> {
+export default class FormPresenter {
   constructor(options: IFormPresenterOptions)
   private initForm(formItems: IFormItem[], initFormValues, rest?: any): void
   public setInitformValues(initFormValues: any): void 
