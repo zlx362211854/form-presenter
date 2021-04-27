@@ -21,6 +21,8 @@ export class FormMethodOverwrite {
       _validateFields().then(values => {
         const vals = formatValues(values)
         cb(null, vals)
+      }).catch(err => {
+        cb(err, {})
       })
     }
   }
@@ -29,6 +31,8 @@ export class FormMethodOverwrite {
     form.validateFields = (cb) => {
       _validateFields([FORM_ITEMS]).then(values => {
         cb(null, formatValues(values))
+      }).catch(err => {
+        cb(err, {})
       })
     }
   }
