@@ -129,7 +129,26 @@ export default class FormPresenter {
       console.warn('Form field cannot be set before form created!');
     }
   };
-
+ /**
+   * @description: remove form item
+   * @param {type}
+   * @return:
+   */
+  public removeFormItem = (key: string) => {
+    const form = this.getForm();
+    if (form) {
+      const formItems = this.options.formItems;
+      const index = formItems.findIndex(i => i.key === key)
+      if (index !== -1) {
+        formItems.splice(index, 1)
+        form.setFieldsValue({
+          ...form.getFieldsValue(),
+        });
+      }
+    } else {
+      console.warn('Form field cannot be set before form created!')
+    }
+  }
   /**
    * @description: 更新form item
    * @param {type}
