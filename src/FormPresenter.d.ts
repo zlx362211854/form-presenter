@@ -164,6 +164,7 @@ export interface IFormItem {
   rules?: ValidationRule[] // 字段的校验规则
   selectOptions?: IOptions // select类型的option
   radioOptions?: IOptions // radio类型的option
+  option?: IOptions // radio类型的option
   min?: number // input number类型的最小值
   max?: number // input number类型的最大值
   prefix?: string // input number类型的前缀
@@ -255,6 +256,7 @@ export default class FormPresenter {
   public getForm():  IRewriteForm
   public getFormItems():  IFormItem[]
   public addFormItem(formItem: IFormItem, index?: number): void
+  public removeFormItem(key: string): void
   public updateFormItem(formItem: IFormItem): void
   public hasField(key: string): boolean
   public resetFields(): void

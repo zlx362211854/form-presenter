@@ -199,19 +199,21 @@ export const UIFunctionMap = new Map([
   [
     UIKeyMap.checkbox,
     (form, formItem, fieldInitValue, formLayout) => {
+      const key = (formItem.radioOptions && formItem.radioOptions.key) || 'key';
+      const title = (formItem.radioOptions && formItem.radioOptions.title) || 'title';
       return (
         <CheckboxGroup disabled={formItem.disabled}>
           {formItem.options
             ? formItem.options.map((option, index) => (
-                <Checkbox value={option[formItem.radioOptions.key]} key={index}>
-                  {option[formItem.radioOptions.title]}
+                <Checkbox value={option[key]} key={index}>
+                  {option[title]}
                 </Checkbox>
               ))
             : fieldInitValue &&
               fieldInitValue.options &&
               fieldInitValue.options.map((option, index) => (
-                <Checkbox value={option[formItem.radioOptions.key]} key={index}>
-                  {option[formItem.radioOptions.title]}
+                <Checkbox value={option[key]} key={index}>
+                  {option[title]}
                 </Checkbox>
               ))}
         </CheckboxGroup>
