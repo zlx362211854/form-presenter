@@ -10,6 +10,7 @@ export type uiType =
   | 'switch'
   | 'select'
   | 'radio'
+  | 'checkbox'
   | 'datePicker'
   | 'dateRangePicker'
   | 'monthPicker'
@@ -164,7 +165,7 @@ export interface IFormItem {
   rules?: ValidationRule[] // 字段的校验规则
   selectOptions?: IOptions // select类型的option
   radioOptions?: IOptions // radio类型的option
-  option?: IOptions // radio类型的option
+  options?: IOptions[] // options
   min?: number // input number类型的最小值
   max?: number // input number类型的最大值
   prefix?: string // input number类型的前缀
