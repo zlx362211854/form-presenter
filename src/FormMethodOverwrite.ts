@@ -29,7 +29,7 @@ export class FormMethodOverwrite {
   private validateFields = (form) => {
     const _validateFields = form.validateFields
     form.validateFields = (cb) => {
-      _validateFields([FORM_ITEMS]).then(values => {
+      _validateFields().then(values => {
         cb(null, formatValues(values))
       }).catch(err => {
         cb(err, {})

@@ -31,6 +31,9 @@ export interface IPicturesWall {
 export default class PicturesWall extends React.Component<IPicturesWall> {
   private defaultFileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
   private defaultFileSize = 2
+  constructor(props) {
+    super(props)
+  }
   state = {
     previewVisible: false,
     previewImage: '',
