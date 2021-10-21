@@ -99,7 +99,7 @@ export default class PicturesWall extends React.Component<IPicturesWall> {
 
     const {fileList} = info
     if (info.file.status === 'done' || info.file.status === 'removed') {
-      const donefileList = fileList.filter((i) => i.status === 'done').map((i) => i.response?.result ? i.response.result : i.response?.url)
+      const donefileList = fileList.filter((i) => i.status === 'done').map((i) => (i.response?.result || i.response?.url || i.response))
       this.props.onChange(donefileList[0])
     }
     this.setState({fileList})
