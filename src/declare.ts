@@ -152,6 +152,10 @@ export interface IuploadProps {
 }
 export interface IRenderProps {
   form: FormProps['form']
+  formItem: IFormItem
+  fieldInitValue: any
+  formLayout: IFormItemLayout
+  initFormValues: any
 }
 export interface IFormItem {
   label?: string // 字段的label

@@ -209,6 +209,7 @@ const FormCreator = forwardRef((props: IProps, ref) => {
         formItem,
         fieldInitValue,
         formLayout,
+        initFormValues
       );
     } else {
       return "不存在的formField UI类型:" + formItem.uiType;

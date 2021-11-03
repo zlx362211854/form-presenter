@@ -327,10 +327,10 @@ export const UIFunctionMap = new Map([
   ],
   [
     UIKeyMap.custom,
-    (form, formItem, fieldInitValue, formLayout) => {
+    (form, formItem, fieldInitValue, formLayout, initFormValues) => {
       const Custom = formItem.render;
       // 自定义渲染时返回form对象供使用
-      return <Custom form={form} />;
+      return <Custom form={form} fieldInitValue={fieldInitValue} formItem={formItem} initFormValues={initFormValues} />;
     },
   ],
 ]);
