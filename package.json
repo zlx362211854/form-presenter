@@ -3,12 +3,13 @@
   "version": "2.0.16",
   "description": "FormPresenter",
   "main": "lib/index.js",
-  "types": "lib/FormPresenter.d.ts",
+  "types": "lib/index.d.ts",
   "homepage": "https://github.com/zlx362211854/form-presenter",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "./node_modules/.bin/webpack-dev-server --mode development --config webpack.config.js",
-    "build": "babel --extensions '.ts,.js,.tsx'  src --out-dir lib --ignore \"node_modules\",\"src/FormPresenter.d.ts\""
+    "build": "babel --extensions '.ts,.js,.tsx'  src --out-dir lib --ignore \"node_modules\",\"src/FormPresenter.d.ts\"",
+    "build-tsc": "tsc -p ./"
   },
   "dependencies": {
     "axios": "^0.20.0",

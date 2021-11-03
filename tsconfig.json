@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": false,
+        "removeComments": true,
+        "declaration": true,
+        "declarationDir": "lib",
+        "outDir": "lib",
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "lib": ["dom", "es2015", "es5", "es6"],
+        "target": "es5"
+
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ]
+}
