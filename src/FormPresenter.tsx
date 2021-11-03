@@ -49,7 +49,10 @@ export default class FormPresenter {
     this.HOCFormComponent = (componentProps) => {
       const initFormValues = this.options.initFormValues;
       Object.keys(initFormValues)?.forEach((key) => {
-        this.options.formItems.find((i) => i.key === key)[key] = initFormValues[key];
+        const r = this.options.formItems.find((i) => i.key === key)
+        if (r && r[key]) {
+          r[key] = initFormValues[key];
+        }
       });
       return (
         <FormCreator
