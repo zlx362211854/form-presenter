@@ -53,9 +53,13 @@ export class FormMethodOverwrite {
   private setFieldsValue = (form) => {
     const __setFieldsValue = form.setFieldsValue
     form.setFieldsValue = (params) => {
+      if (!params) return
       const values = this.originForm.getFieldsValue()?.[FORM_ITEMS]
       Object.keys(params).forEach(k => {
-        values.find(i => i.key === k)[k] = params[k]
+        const r = values.find(i => i.key === k)
+        if (r && r[k]) {
+          r[k] = params[k]
+        }
       })
       __setFieldsValue({
         [FORM_ITEMS]: values
