@@ -26,7 +26,8 @@ export interface IPicturesWall {
   fileTypes?: string[]
   fileSize?: number,
   origin?: boolean
-  stringValue?: boolean
+  stringValue?: boolean,
+  multiple?: boolean
 }
 export default class PicturesWall extends React.Component<IPicturesWall> {
   private defaultFileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
@@ -98,8 +99,7 @@ export default class PicturesWall extends React.Component<IPicturesWall> {
   handleChange = (info) => {
     const { fileList } = info
     if (info.file.status === 'done' || info.file.status === 'removed') {
-      console.log(info, 'info')
-      const donefileList = fileList.filter((i) => i.status === 'done').map((i) => i.response?.result ? i.response.result : i.response?.url)
+      const donefileList = fileList.filter((i) => i.status === 'done').map((i) => i.response.result)
       this.props.onChange(this.props?.stringValue ? donefileList[0] : donefileList)
     }
     this.setState({ fileList })
@@ -133,6 +133,7 @@ export default class PicturesWall extends React.Component<IPicturesWall> {
           onPreview={this.handlePreview}
           beforeUpload={this.beforeUpload}
           onChange={this.handleChange}
+          multiple={this.props.multiple}
           showUploadList={{ showPreviewIcon: true, showRemoveIcon: true, showDownloadIcon: false }}
         >
           {fileList.length >= maxFileLength ? null : uploadButton}

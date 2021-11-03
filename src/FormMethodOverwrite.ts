@@ -1,72 +1,32 @@
 import _ from 'lodash'
-import {FORM_ITEMS} from './enums'
-import { formatValues } from './FormCreator'
-import { IRewriteForm } from './FormPresenter'
+import {FORM_TITEMS} from './enums'
 export class FormMethodOverwrite {
-  private overwritedForm: IRewriteForm
-  private originForm: IRewriteForm
-  constructor(form) {
-    this.originForm = form
-    let overwritedForm = _.cloneDeep(form)
-    this.validateFieldsAndScroll(overwritedForm)
-    this.validateFields(overwritedForm)
-    this.getFieldsValue(overwritedForm)
-    this.getFieldValue(overwritedForm)
-    this.setFieldsValue(overwritedForm)
-    this.overwritedForm = overwritedForm
-  }
-  private validateFieldsAndScroll = (form) => {
-    const _validateFields = form.validateFields
+  protected __validateFieldsAndScroll = (form) => {
+    const _validateFieldsAndScroll = form.validateFieldsAndScroll
     form.validateFieldsAndScroll = (cb) => {
-      _validateFields().then(values => {
-        const vals = formatValues(values)
-        cb(null, vals)
-      }).catch(err => {
-        cb(err, {})
+      _validateFieldsAndScroll((err, values) => {
+        const returnValues = _.cloneDeep(values)
+        delete returnValues[FORM_TITEMS]
+        cb(err, returnValues)
       })
     }
   }
-  private validateFields = (form) => {
+  protected __validateFields = (form) => {
     const _validateFields = form.validateFields
     form.validateFields = (cb) => {
-      _validateFields().then(values => {
-        cb(null, formatValues(values))
-      }).catch(err => {
-        cb(err, {})
+      _validateFields((err, values) => {
+        const returnValues = _.cloneDeep(values)
+        delete returnValues[FORM_TITEMS]
+        cb(err, returnValues)
       })
     }
   }
-  private getFieldValue = (form) => {
-    const __getFieldValue = form.getFieldValue
-    form.getFieldValue = (key) => {
-      const values = __getFieldValue([FORM_ITEMS])
-      return values?.find(i => i.key === key)?.[key]
-    }
-  }
-  private getFieldsValue = (form) => {
+  protected __getFieldsValue = (form) => {
     const __getFieldsValue = form.getFieldsValue
     form.getFieldsValue = (cb) => {
       const values = __getFieldsValue()
-      return formatValues(values)
+      delete values[FORM_TITEMS]
+      return values
     }
-  }
-  private setFieldsValue = (form) => {
-    const __setFieldsValue = form.setFieldsValue
-    form.setFieldsValue = (params) => {
-      if (!params) return
-      const values = this.originForm.getFieldsValue()?.[FORM_ITEMS]
-      Object.keys(params).forEach(k => {
-        const r = values.find(i => i.key === k)
-        if (r && r[k]) {
-          r[k] = params[k]
-        }
-      })
-      __setFieldsValue({
-        [FORM_ITEMS]: values
-      })
-    }
-  }
-  public getForm = (): IRewriteForm => {
-    return this.overwritedForm
   }
 }

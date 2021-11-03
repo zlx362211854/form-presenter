@@ -1,9 +1,10 @@
-import { FormProps, Rule } from 'antd/es/form';
+import { FormProps } from 'antd/es/form';
 export type uiType =
   | 'text'
   | 'info'
   | 'title'
   | 'input'
+  | 'inputRange'
   | 'color'
   | 'textArea'
   | 'numberInput'
@@ -22,16 +23,6 @@ export type uiType =
   | 'treeSelect'
   | 'custom'
   | 'checkbox'
-  | 'pageSelect'
-  | 'checkboxTab'
-  | 'ueditor'
-  | 'goods_list'
-  | 'goods_single'
-  | 'attachment'
-  | 'model_id'
-  | 'reduce_rule'
-  | 'map_lon_lat'
-
 
 export type RuleType =
   | 'string'
@@ -159,9 +150,9 @@ export interface IRenderProps {
 }
 export interface IFormItem {
   label?: string // 字段的label
-  key?: string // 字段在form中的key
+  key: string // 字段在form中的key
   uiType?: uiType // 字段对应的ui类型
-  rules?: Rule[] // 字段的校验规则
+  rules?: ValidationRule[] // 字段的校验规则
   options?: any[] //
   renderByTreeData?: boolean // treeSelect 组件是否根据treeData渲染
   multiple?: boolean // select 是否可多选
@@ -188,6 +179,9 @@ export interface IFormItem {
   addtionSelet?: any[]
   placeholder?: string
   precision?: any
+  onChange?: Function
+  onBlur?: Function,
+  renderItem?: Funciton
 }
 export interface IFormItemLayout {
   labelCol?: ICol
@@ -201,8 +195,4 @@ export interface IFormPresenter {
   initFormValues?: any
   onFieldsChange?: Function
   onValuesChange?: Function
-}
-export interface IformLayout extends IFormItemLayout {
-  type: string
-  col?: number
 }

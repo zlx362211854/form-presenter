@@ -18,6 +18,7 @@ export default class ImageService {
         method: 'get',
         url: URL_GET_PICTURE_URL + '&filePath=' + img,
         responseType: 'text',
+        headers: {'Content-Type': 'multipart/form-data;'}
       }).then((res) => {
         onComplete(res)
       })
