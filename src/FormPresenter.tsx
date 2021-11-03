@@ -42,7 +42,9 @@ export default class FormPresenter {
     this.options = options;
     this.initForm();
   }
-
+  public setInitFormValues = (initFormValues: any) => {
+    this.options.initFormValues = initFormValues
+  }
   private initForm = () => {
     this.HOCFormComponent = (componentProps) => {
       const initFormValues = this.options.initFormValues;
@@ -93,6 +95,15 @@ export default class FormPresenter {
   public getFormItems = (): IFormItem[] => {
     return this.options.formItems;
   };
+
+  /**
+       * @description: 返回formItem的下标
+       * @param {type}
+       * @return: index
+       */
+  public getFormItemIndex = (key: string): number => {
+    return this.options.formItems?.findIndex(i => i.key === key)
+  }
   /**
    * @description: 返回form实例
    * @param {type}
@@ -129,11 +140,11 @@ export default class FormPresenter {
       console.warn('Form field cannot be set before form created!');
     }
   };
- /**
-   * @description: remove form item
-   * @param {type}
-   * @return:
-   */
+  /**
+    * @description: remove form item
+    * @param {type}
+    * @return:
+    */
   public removeFormItem = (key: string) => {
     const form = this.getForm();
     if (form) {
@@ -145,6 +156,38 @@ export default class FormPresenter {
           ...form.getFieldsValue(),
         });
       }
+    } else {
+      console.warn('Form field cannot be set before form created!')
+    }
+  }
+  /**
+    * @description: add form list 
+    * @param {type}
+    * @return:
+    */
+  public addFormList = (formItemList: any[]) => {
+    const form = this.getForm();
+    if (form) {
+      if (!formItemList) return
+      let formItems = this.options.formItems;
+      this.options.formItems = formItems.concat(formItemList)
+      form.setFieldsValue({
+        ...form.getFieldsValue(),
+      });
+    } else {
+      console.warn('Form field cannot be set before form created!')
+    }
+  }
+
+  public replaceFormList = (formItemList: any[], formValues) => {
+    const form = this.getForm();
+    if (form) {
+      if (!formItemList) return
+      this.options.initFormValues = formValues
+      this.options.formItems = formItemList
+      form.setFieldsValue({
+        ...form.getFieldsValue(),
+      });
     } else {
       console.warn('Form field cannot be set before form created!')
     }

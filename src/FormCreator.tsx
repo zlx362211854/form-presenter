@@ -13,6 +13,15 @@ const defaultFormItemLayout = {
     span: 14,
   },
 };
+const defaultFormItemLayoutWithoutLabel = {
+  labelCol: {
+    span: 0,
+  },
+  wrapperCol: {
+    span: 14,
+    offset: 6
+  },
+}
 interface IComponentProps {
   initFormValues?: any
   loading?: boolean
@@ -115,6 +124,18 @@ const FormCreator = forwardRef((props: IProps, ref) => {
                   <span style={{ color: "#878787" }}>{formItem.extra}</span>
                 </Form.Item>
               );
+            }
+            if (formItem.uiType === uiTypeEnums.BUTTON) {
+              return (
+                <Form.Item
+                  {...defaultFormItemLayoutWithoutLabel}
+                  colon={false}
+                  label={''}
+                  key={formItem.label}
+                >
+                  <Button type="primary" onClick={formItem.itemAtion}>{formItem.label}</Button>
+                </Form.Item>
+              )
             }
             return (
               <Form.Item

@@ -19,6 +19,7 @@ const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 const { MonthPicker, RangePicker } = DatePicker;
 const { TreeNode } = TreeSelect;
+const { Option } = Select;
 
 export const UIKeyMap = {
   text: [uiTypeEnums.TEXT],
@@ -84,7 +85,7 @@ export const UIFunctionMap = new Map([
   [
     UIKeyMap.textArea,
     (form, formItem, fieldInitValue, formLayout) => {
-      return <Input.TextArea rows={formItem.rows} placeholder={formItem.placeholder} style={formItem.fontSize ? {fontSize: formItem.fontSize} : {}}/>;
+      return <Input.TextArea rows={formItem.rows} placeholder={formItem.placeholder} style={formItem.fontSize ? { fontSize: formItem.fontSize } : {}} />;
     },
   ],
   [
@@ -100,9 +101,8 @@ export const UIFunctionMap = new Map([
           precision={formItem.precision}
           formatter={(value: number): string => {
             if (value) {
-              return `${typeof formItem.prefix === 'undefined' ? '' : formItem.prefix}${value}${
-                typeof formItem.suffix === 'undefined' ? '' : formItem.suffix
-              }`;
+              return `${typeof formItem.prefix === 'undefined' ? '' : formItem.prefix}${value}${typeof formItem.suffix === 'undefined' ? '' : formItem.suffix
+                }`;
             }
           }}
           parser={(value: string): string => {
@@ -110,7 +110,6 @@ export const UIFunctionMap = new Map([
               return value.replace(formItem.prefix, '').replace(formItem.suffix, '');
             }
           }}
-          step={formItem.step}
           disabled={formItem.disabled}
         />
       );
@@ -157,17 +156,17 @@ export const UIFunctionMap = new Map([
         >
           {formItem.options
             ? formItem.options.map((option, index) => (
-                <Select.Option value={option[key]} key={index}>
-                  {option[title]}
-                </Select.Option>
-              ))
+              <Option value={option[key]} key={index}>
+                {option[title]}
+              </Option>
+            ))
             : fieldInitValue &&
-              fieldInitValue.options &&
-              fieldInitValue.options.map((option) => (
-                <Select.Option value={option[key]} key={option[key]}>
-                  {option[title]}
-                </Select.Option>
-              ))}
+            fieldInitValue.options &&
+            fieldInitValue.options.map((option) => (
+              <Option value={option[key]} key={option[key]}>
+                {option[title]}
+              </Option>
+            ))}
         </Select>
       );
     },
@@ -181,17 +180,17 @@ export const UIFunctionMap = new Map([
         <RadioGroup disabled={formItem.disabled}>
           {formItem.options
             ? formItem.options.map((option, index) => (
-                <Radio value={option[key]} key={option[key]}>
-                  {option[title]}
-                </Radio>
-              ))
+              <Radio value={option[key]} key={option[key]}>
+                {option[title]}
+              </Radio>
+            ))
             : fieldInitValue &&
-              fieldInitValue.options &&
-              fieldInitValue.options.map((option, index) => (
-                <Radio value={option[key]} key={option[key]}>
-                  {option[title]}
-                </Radio>
-              ))}
+            fieldInitValue.options &&
+            fieldInitValue.options.map((option, index) => (
+              <Radio value={option[key]} key={option[key]}>
+                {option[title]}
+              </Radio>
+            ))}
         </RadioGroup>
       );
     },
@@ -205,17 +204,17 @@ export const UIFunctionMap = new Map([
         <CheckboxGroup disabled={formItem.disabled}>
           {formItem.options
             ? formItem.options.map((option, index) => (
-                <Checkbox value={option[key]} key={index}>
-                  {option[title]}
-                </Checkbox>
-              ))
+              <Checkbox value={option[key]} key={index}>
+                {option[title]}
+              </Checkbox>
+            ))
             : fieldInitValue &&
-              fieldInitValue.options &&
-              fieldInitValue.options.map((option, index) => (
-                <Checkbox value={option[key]} key={index}>
-                  {option[title]}
-                </Checkbox>
-              ))}
+            fieldInitValue.options &&
+            fieldInitValue.options.map((option, index) => (
+              <Checkbox value={option[key]} key={index}>
+                {option[title]}
+              </Checkbox>
+            ))}
         </CheckboxGroup>
       );
     },
