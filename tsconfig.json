@@ -3,6 +3,7 @@
         "noImplicitAny": false,
         "removeComments": true,
         "declaration": true,
+        "emitDeclarationOnly": true,
         "declarationDir": "lib",
         "outDir": "lib",
         "allowSyntheticDefaultImports": true,

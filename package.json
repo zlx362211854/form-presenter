@@ -8,7 +8,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "./node_modules/.bin/webpack-dev-server --mode development --config webpack.config.js",
-    "build": "babel --extensions '.ts,.js,.tsx'  src --out-dir lib --ignore \"node_modules\",\"src/FormPresenter.d.ts\"",
+    "build": "babel --extensions '.ts,.js,.tsx'  src --out-dir lib --ignore \"node_modules\" && tsc -p ./",
     "build-tsc": "tsc -p ./"
   },
   "dependencies": {
