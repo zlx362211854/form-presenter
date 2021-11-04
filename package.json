@@ -1,6 +1,6 @@
 {
   "name": "form-presenter",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "FormPresenter",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
