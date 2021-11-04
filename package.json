@@ -8,8 +8,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "./node_modules/.bin/webpack-dev-server --mode development --config webpack.config.js",
-    "build": "babel --extensions '.ts,.js,.tsx'  src --out-dir lib --ignore \"node_modules\" && tsc -p ./",
-    "build-tsc": "tsc -p ./"
+    "build": "babel --extensions '.ts,.js,.tsx'  src --out-dir lib --ignore \"node_modules\" && copyfiles -f 'src/**/*.d.ts' './lib' && tsc -p ./",
+    "build-tsc": "tsc -p ./",
+    "copy": "copyfiles -f 'src/**/*.d.ts' './lib'"
   },
   "dependencies": {
     "@ant-design/compatible": "^1.0.8",
@@ -41,6 +42,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
+    "copyfiles": "^2.4.1",
     "css-loader": "^4.3.0",
     "customize-cra": "^1.0.0",
     "html-webpack-plugin": "^4.5.0",
