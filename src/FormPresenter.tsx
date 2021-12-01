@@ -96,7 +96,7 @@ export default class FormPresenter extends FormLifecycle {
     }
   }
 
-  private initForm = (formItems: IFormItem[], initFormValues: any, rest?: any): void => {
+  protected initForm = (formItems: IFormItem[], initFormValues: any, rest?: any): void => {
     const { onFieldsChange, onValuesChange } = rest
     let formCreated = false
     this.HOCFormComponent = Form.create({ onFieldsChange, onValuesChange })(
