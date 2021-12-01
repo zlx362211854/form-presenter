@@ -44,9 +44,9 @@ export interface IformLayout extends IFormItemLayout {
 }
 export default class FormPresenter extends FormLifecycle {
   @observable
-  private HOCFormComponent: any
+  protected HOCFormComponent: any
 
-  private form: IFormProps['form']
+  protected form: IFormProps['form']
 
   private formItems: IFormItem[]
 
