@@ -466,6 +466,9 @@ export const UIFunctionMap = new Map([
         initialValue: fieldInitValue,
         getValueFromEvent: (value) => {
           return (Array.isArray(value) && value.length === 1) ? value[0] : value
+        },
+        normalize: (value, preval, allval) => {
+          return Array.isArray(value) && value.length === 1 ? value[0] : value;
         }
       })(
         <Avatar
@@ -484,6 +487,9 @@ export const UIFunctionMap = new Map([
         initialValue: fieldInitValue,
         getValueFromEvent: (value) => {
           return (Array.isArray(value) && value.length === 1) ? value[0] : value
+        },
+        normalize: (value, preval, allval) => {
+          return Array.isArray(value) && value.length === 1 ? value[0] : value;
         }
       })(
         <PicturesWall
