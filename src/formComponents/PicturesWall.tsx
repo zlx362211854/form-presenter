@@ -19,7 +19,6 @@ export interface IFileProp {
   url: string
 }
 export interface IPicturesWall {
-  onChange: (value: any) => void
   action: string
   initImageUrls?: IFileProp[] | string[]
   maxFileLength: number
@@ -98,10 +97,6 @@ export default class PicturesWall extends React.Component<IPicturesWall> {
 
   handleChange = (info) => {
     const { fileList } = info
-    if (info.file.status === 'done' || info.file.status === 'removed') {
-      const donefileList = fileList.filter((i) => i.status === 'done').map((i) => i.response.result)
-      this.props.onChange(this.props?.stringValue ? donefileList[0] : donefileList)
-    }
     this.setState({ fileList })
   }
   beforeUpload = (file) => {

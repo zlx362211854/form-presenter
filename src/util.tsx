@@ -461,20 +461,17 @@ export const UIFunctionMap = new Map([
   [
     UIKeyMap.avatar,
     (form, formItem, fieldInitValue, formLayout) => {
-      const onChange = (value) => {
-        form.setFieldsValue({
-          [formItem.key]: (Array.isArray(value) && value.length === 1) ? value[0] : value,
-        })
-      }
       return form.getFieldDecorator(formItem.key, {
         rules: formItem.rules,
         initialValue: fieldInitValue,
+        getValueFromEvent: (value) => {
+          return (Array.isArray(value) && value.length === 1) ? value[0] : value
+        }
       })(
         <Avatar
           disabled={formItem.disabled}
           {...formItem.uploadProps}
-          initImageUrls={fieldInitValue && [fieldInitValue]}
-          onChange={onChange}
+          initImageUrls={typeof fieldInitValue === 'string' ? [fieldInitValue] : fieldInitValue}
         />,
       )
     },
@@ -482,19 +479,16 @@ export const UIFunctionMap = new Map([
   [
     UIKeyMap.picturesWall,
     (form, formItem, fieldInitValue, formLayout) => {
-      const onChange = (value) => {
-        form.setFieldsValue({
-          [formItem.key]: (Array.isArray(value) && value.length === 1) ? value[0] : value,
-        })
-      }
       return form.getFieldDecorator(formItem.key, {
         rules: formItem.rules,
         initialValue: fieldInitValue,
+        getValueFromEvent: (value) => {
+          return (Array.isArray(value) && value.length === 1) ? value[0] : value
+        }
       })(
         <PicturesWall
           {...formItem.uploadProps}
           initImageUrls={typeof fieldInitValue === 'string' ? [fieldInitValue] : fieldInitValue}
-          onChange={onChange}
         />,
       )
     },
