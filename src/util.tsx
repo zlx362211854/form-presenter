@@ -463,7 +463,7 @@ export const UIFunctionMap = new Map([
     (form, formItem, fieldInitValue, formLayout) => {
       const onChange = (value) => {
         form.setFieldsValue({
-          [formItem.key]: value,
+          [formItem.key]: (Array.isArray(value) && value.length === 1) ? value[0] : value,
         })
       }
       return form.getFieldDecorator(formItem.key, {
@@ -484,7 +484,7 @@ export const UIFunctionMap = new Map([
     (form, formItem, fieldInitValue, formLayout) => {
       const onChange = (value) => {
         form.setFieldsValue({
-          [formItem.key]: value,
+          [formItem.key]: (Array.isArray(value) && value.length === 1) ? value[0] : value,
         })
       }
       return form.getFieldDecorator(formItem.key, {
@@ -493,7 +493,7 @@ export const UIFunctionMap = new Map([
       })(
         <PicturesWall
           {...formItem.uploadProps}
-          initImageUrls={fieldInitValue}
+          initImageUrls={typeof fieldInitValue === 'string' ? [fieldInitValue] : fieldInitValue}
           onChange={onChange}
         />,
       )
