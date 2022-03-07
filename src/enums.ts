@@ -28,6 +28,7 @@ export enum uiTypeEnums {
 
   TREESELECT = 'treeSelect', // 树形选择
   CUSTOM = 'custom', // 自定义
+  CUSTOM_NATIVE = 'custom_native', // 自定义
 }
 
 export const FORM_TITEMS = '__formItems__'

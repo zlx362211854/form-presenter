@@ -152,6 +152,7 @@ export interface IFormItem {
   label?: string // 字段的label
   key: string // 字段在form中的key
   uiType?: uiType // 字段对应的ui类型
+  keySuffix?: string[] // 字段前缀（dateRangePicker 或 inputRange使用）
   rules?: ValidationRule[] // 字段的校验规则
   options?: any[] //
   renderByTreeData?: boolean // treeSelect 组件是否根据treeData渲染

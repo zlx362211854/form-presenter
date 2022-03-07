@@ -34,6 +34,7 @@ export const UIKeyMap = {
   picturesWall: [uiTypeEnums.PICTURES_WALL],
   treeSelect: [uiTypeEnums.TREESELECT],
   custom: [uiTypeEnums.CUSTOM],
+  custom_native: [uiTypeEnums.CUSTOM_NATIVE],
 }
 
 
@@ -509,7 +510,17 @@ export const UIFunctionMap = new Map([
         initialValue: fieldInitValue && fieldInitValue.value
       })(<Custom form={form} fieldInitValue={fieldInitValue} formItem={formItem} initFormValues={initFormValues} />)
     },
-  ]
+  ],
+  [
+    UIKeyMap.custom_native,
+    (form, formItem, fieldInitValue, formLayout, _) => {
+      const {renderItem} = formItem
+      return form.getFieldDecorator(formItem.key, {
+        rules: formItem.rules,
+        initialValue: fieldInitValue,
+      })(renderItem?.())
+    },
+  ],
 ])
 
 
