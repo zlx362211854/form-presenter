@@ -66,7 +66,7 @@ export default class FormCreator extends React.Component<IFormCreator> {
     const { form, initFormValues, formLayout } = this.props
     let fieldInitValue = initFormValues[formItem.key]
     const keyString = formItem.key;
-    let _fieldInitValue = keyString.split('.').reduce((pr, cuur, inde, arr) => {
+    let _fieldInitValue = keyString?.split('.').reduce((pr, cuur, inde, arr) => {
       return pr[cuur]
     }, initFormValues)
     if (!fieldInitValue && _fieldInitValue) {

@@ -23,6 +23,7 @@ export type uiType =
   | 'treeSelect'
   | 'custom'
   | 'checkbox'
+  | 'imgSelect'
 
 export type RuleType =
   | 'string'

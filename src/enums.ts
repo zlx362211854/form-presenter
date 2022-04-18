@@ -15,6 +15,7 @@ export enum uiTypeEnums {
   CURRENCY_INPUT = 'currencyInput', // 货币输入框
   SWITCH = 'switch', // 开关
   SELECT = 'select', // 下拉
+  IMG_SELECT = 'imgSelect', // sleect with img 
   RADIO = 'radio', // 单选
   CHECKBOX = 'checkbox', // 复选
   DATE_PICKER = 'datePicker', // 日期选择
