@@ -266,9 +266,9 @@ export const UIFunctionMap = new Map([
           disabled={formItem.disabled}
           getPopupContainer={(triggerNode: any) => triggerNode.parentNode}
           showSearch
-          filterOption={(input, option) =>
-            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
+          filterOption={(input, option) => {
+            return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }}
         >
           {formItem.options
             ? formItem.options.map((option, index) => (
@@ -305,9 +305,9 @@ export const UIFunctionMap = new Map([
           disabled={formItem.disabled}
           getPopupContainer={(triggerNode: any) => triggerNode.parentNode}
           showSearch
-          filterOption={(input, option) =>
-            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
+          filterOption={(input, option) => {
+            return option.props?.children[1]?.toLowerCase()?.indexOf(input.toLowerCase()) >= 0
+          }}
         >
           {formItem.options
             ? formItem.options.map((option, index) => (
